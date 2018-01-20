@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
+</head>
+<body>
+    <form action="" method="post" class="basic-grey">
+    <h1>QA Read Attributes Tool
+    <span>Please fill in the fields.</span>
+    </h1>
+    <label>
+    <span>System Controller Address:</span>
+    <input id="SC_Address" type="text" name="SC_Address" placeholder="System Controller Address" />
+    </label>
+    <label>
+    <span>WAC Address :</span>
+    <input id="WAC_Address" type="text" name="WAC_Address" placeholder="WAC Address" />
+    </label>
+    <label>
+    <span>Device IEEE Address :</span>
+    <input id="Device IEEE Address" type="text" name="Device_Address" placeholder="Device IEEE Address" />
+    </label>
+    <label>
+    <span>Device Endpoint:</span>
+    <input id="Device Endpoint" type="text" name="Device_Endpoint" placeholder="Device Endpoint" />
+    </label>
+    <label>
+    <span>Message :</span>
+    <textarea id="message" name="message" placeholder="Your Message to Us"></textarea>
+    </label>
+    <label>
+    <span>Subject :</span><select name="selection">
+    <option value="Job Inquiry">Job Inquiry</option>
+    <option value="General Question">General Question</option>
+    </select>
+    </label>
+    <label>
+    <span>&nbsp;</span>
+    <input type="button" class="button" value="Send" />
+    </label>
+    </form>
+</body>
+</html>

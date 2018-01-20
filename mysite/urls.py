@@ -22,4 +22,5 @@ urlpatterns = [
     re_path(r'^$', views.home, name = 'home'),
     re_path(r'^(?P<id>\d+)/$', views.detail, name='detail'),
     path('ssh/', views.ssh_test),
+    path('mainpage/', views.beautiful_mainpage),
 ]

@@ -52,3 +52,8 @@ def ssh_test(request):
     client.close()
     return render(request, 'ssh.html', {'ssh_output': resp})
     #return HttpResponse(html)
+
+def beautiful_mainpage(request):
+
+
+    return render(request, 'mainpage.html')
