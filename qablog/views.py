@@ -55,5 +55,12 @@ def ssh_test(request):
 
 def beautiful_mainpage(request):
 
-
     return render(request, 'mainpage.html')
+
+def form_process(request):
+    request.encoding = 'utf-8'
+    if 'SC_Address' in request.GET:
+        message = 'SC_Address的内容为: ' + request.GET['SC_Address']
+    else:
+        message = '你提交了空表单'
+    return HttpResponse(message)

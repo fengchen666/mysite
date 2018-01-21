@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
 </head>
 <body>
-    <form action="" method="post" class="basic-grey">
+    <form action="/form_process" method="get" class="basic-grey">
     <h1>QA Read Attributes Tool
     <span>Please fill in the fields.</span>
     </h1>
@@ -39,7 +39,8 @@
     </label>
     <label>
     <span>&nbsp;</span>
-    <input type="button" class="button" value="Send" />
+    <!--<input type="button" class="button" value="Send" />-->
+        <input type="submit" class="button" value="Send" />
     </label>
     </form>
 </body>
