@@ -2,7 +2,7 @@
 .basic-grey {
 margin-left:auto;
 margin-right:auto;
-max-width: 500px;
+max-width: 800px;
 background: #D2E9FF;
 padding: 25px 15px 25px 10px;
 font: 12px Georgia, "Times New Roman", Times, serif;
@@ -20,7 +20,7 @@ color: #888;
 }
 .basic-grey h1>span {
 display: block;
-font-size: 11px;
+font-size: 21px;
 }
 .basic-grey label {
 display: block;
@@ -59,7 +59,7 @@ appearance:none;
 -moz-appearance: none;
 text-indent: 0.01px;
 text-overflow: '';
-width: 70%;
+width: 30%;
 height: 35px;
 line-height: 25px;
 }

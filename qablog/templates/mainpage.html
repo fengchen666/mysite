@@ -7,41 +7,94 @@
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
 </head>
 <body>
-    <form action="/form_process" method="get" class="basic-grey">
-    <h1>QA Read Attributes Tool
-    <span>Please fill in the fields.</span>
+<form action="/form_process" method="get" class="basic-grey">
+    <h1>Device Attributes Tool
+        <span>Please fill in the fields.</span>
     </h1>
     <label>
-    <span>System Controller Address:</span>
-    <input id="SC_Address" type="text" name="SC_Address" placeholder="System Controller Address" />
+        <span>System Controller Address:</span>
+        <input id="SC_Address" type="text" name="SC_Address" placeholder="System Controller Address" />
     </label>
     <label>
-    <span>WAC Address :</span>
-    <input id="WAC_Address" type="text" name="WAC_Address" placeholder="WAC Address" />
+        <span>WAC Address :</span>
+        <input id="WAC_Address" type="text" name="WAC_Address" placeholder="WAC Address" />
     </label>
     <label>
-    <span>Device IEEE Address :</span>
-    <input id="Device IEEE Address" type="text" name="Device_Address" placeholder="Device IEEE Address" />
+        <span>Device IEEE Address :</span>
+        <input id="Device IEEE Address" type="text" name="Device_Address" placeholder="Device IEEE Address" />
     </label>
     <label>
-    <span>Device Endpoint:</span>
-    <input id="Device Endpoint" type="text" name="Device_Endpoint" placeholder="Device Endpoint" />
+        <span>Device Endpoint:</span>
+        <input id="Device Endpoint" type="text" name="Device_Endpoint" placeholder="Device Endpoint" />
     </label>
+    <!--<label>-->
+        <!--<span>Device Cluster:</span><select name="Device_Cluster">-->
+        <!--<option value="Basic">Basic</option>-->
+        <!--<option value="Identify">Identify</option>-->
+        <!--<option value="Groups">Groups</option>-->
+        <!--<option value="Scenes">Scenes</option>-->
+        <!--<option value="On/Off">On/Off</option>-->
+        <!--<option value="Level Control">Level Control</option>-->
+    <!--</select>-->
+    <!--</label>-->
+    <!--<label>-->
+        <!--<span>Device Attribute ID:</span>-->
+        <!--<input id="Device Attribute" type="text" name="Device_Attribute" placeholder="Device Attribute" />-->
+    <!--</label>-->
+    <!--<label>-->
+    <!--<span>Message :</span>-->
+    <!--<textarea id="message" name="message" placeholder="Your Message to Us"></textarea>-->
+    <!--</label>-->
+    <!--<label>-->
+    <!--<span>Subject :</span><select name="selection">-->
+    <!--<option value="Job Inquiry">Job Inquiry</option>-->
+    <!--<option value="General Question">General Question</option>-->
+    <!--</select>-->
+    <!--</label>-->
     <label>
-    <span>Message :</span>
-    <textarea id="message" name="message" placeholder="Your Message to Us"></textarea>
+        <span>Device Cluster:</span>
+        <select id="Device_Cluster" name="Device_Cluster" onchange="changeSelect(this.value)">
+        </select>
     </label>
+
     <label>
-    <span>Subject :</span><select name="selection">
-    <option value="Job Inquiry">Job Inquiry</option>
-    <option value="General Question">General Question</option>
+    <span>Device Attribute:</span>
+    <select id="Device_Attribute" name="Device_Attribute">
     </select>
     </label>
+
+    <script language="javascript">
+    var ClusterAry=["Basic","Identify","Groups","Scenes","On/Off","Level Control"]//学院列表菜单
+    var AttributeAry=[["ZCLVersion","ManufacturerName","PowerSource"],["IdentifyTime"],["NameSupport"],["SceneCount","CurrentScene","CurrentGroup","SceneValid","NameSupport_Scene"],["OnOff"],["CurrentLevel"]]//专业列表菜单
+    var SclSect=document.getElementById("Device_Cluster")
+    var CourSect=document.getElementById("Device_Attribute")
+    for(i=0;i<ClusterAry.length;i++){
+     SclSect.options.add(new Option(ClusterAry[i],i));
+    }
+    for(j=0;j<AttributeAry[0].length;j++){//因为两个下拉菜都是动态的，所以专业这个下拉菜单就默认显示第一个学院的专业
+     CourSect.options.add(new Option(AttributeAry[0][j],j));
+    }
+    function changeSelect(obj){
+     if(obj){
+      CourSect.length=0;//清除原有选项
+     }
+     if(AttributeAry[obj]){
+      for(i=0;i<AttributeAry[obj].length;i++){
+       CourSect.options.add(new Option(AttributeAry[obj][i],i));
+      }
+     }else{
+       CourSect.options.add(new Option("暂未添加专业",""));
+     }
+    }
+    </script>
+
     <label>
-    <span>&nbsp;</span>
-    <!--<input type="button" class="button" value="Send" />-->
+        <span>&nbsp;</span>
+        <!--<input type="button" class="button" value="Send" />-->
         <input type="submit" class="button" value="Send" />
     </label>
-    </form>
+</form>
+
+
 </body>
 </html>
