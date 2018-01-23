@@ -51,46 +51,77 @@
     <!--<option value="General Question">General Question</option>-->
     <!--</select>-->
     <!--</label>-->
+
     <label>
+    <span>Actions:</span><select name="Perform_Action" onchange="setSelVar(this)">
+    <option value="Identify">Identify</option>
+    <option value="Read_Attribute" >Read Attribute</option>
+    <option value="ReadBindings" >ReadBindings</option>
+    <option value="GetGroupMembership">GetGroupMembership</option>
+    <option value="GetCurrentLevel">GetCurrentLevel</option>
+    <option value="GetIdentifyTime">GetIdentifyTime</option>
+    <option value="GetOnOffState">GetOnOffState</option>
+    <option value="TurnOn">TurnOn</option>
+    <option value="TurnOff">TurnOff</option>
+    <option value="ReadReportingConfig">ReadReportingConfig</option>
+    <option value="ReadSimpleDescriptor">ReadSimpleDescriptor</option>
+
+    </select>
+    </label>
+
+    <label id="Cluster_label" style="display:none">
         <span>Device Cluster:</span>
         <select id="Device_Cluster" name="Device_Cluster" onchange="changeSelect(this.value)">
         </select>
     </label>
 
-    <label>
+    <label id="Attribute_label" style="display:none">
     <span>Device Attribute:</span>
     <select id="Device_Attribute" name="Device_Attribute">
     </select>
     </label>
 
-    <script language="javascript">
-    var ClusterAry=["Basic","Identify","Groups","Scenes","On/Off","Level Control"]//学院列表菜单
-    var AttributeAry=[["ZCLVersion","ManufacturerName","PowerSource"],["IdentifyTime"],["NameSupport"],["SceneCount","CurrentScene","CurrentGroup","SceneValid","NameSupport_Scene"],["OnOff"],["CurrentLevel"]]//专业列表菜单
-    var SclSect=document.getElementById("Device_Cluster")
-    var CourSect=document.getElementById("Device_Attribute")
-    for(i=0;i<ClusterAry.length;i++){
-     SclSect.options.add(new Option(ClusterAry[i],i));
-    }
-    for(j=0;j<AttributeAry[0].length;j++){//因为两个下拉菜都是动态的，所以专业这个下拉菜单就默认显示第一个学院的专业
-     CourSect.options.add(new Option(AttributeAry[0][j],j));
-    }
-    function changeSelect(obj){
-     if(obj){
-      CourSect.length=0;//清除原有选项
-     }
-     if(AttributeAry[obj]){
-      for(i=0;i<AttributeAry[obj].length;i++){
-       CourSect.options.add(new Option(AttributeAry[obj][i],i));
-      }
-     }else{
-       CourSect.options.add(new Option("暂未添加专业",""));
-     }
-    }
+    <script type="text/javascript" language="javascript">
+        var ClusterAry=["Basic","Identify","Groups","Scenes","On/Off","Level Control"]//学院列表菜单
+        var AttributeAry=[["ZCLVersion","ManufacturerName","PowerSource"],["IdentifyTime"],["NameSupport"],["SceneCount","CurrentScene","CurrentGroup","SceneValid","NameSupport_Scene"],["OnOff"],["CurrentLevel"]]//专业列表菜单
+        var SclSect=document.getElementById("Device_Cluster")
+        var CourSect=document.getElementById("Device_Attribute")
+        for(i=0;i<ClusterAry.length;i++){
+         SclSect.options.add(new Option(ClusterAry[i],i));
+        }
+        for(j=0;j<AttributeAry[0].length;j++){//因为两个下拉菜都是动态的，所以专业这个下拉菜单就默认显示第一个学院的专业
+         CourSect.options.add(new Option(AttributeAry[0][j],j));
+        }
+        function changeSelect(obj){
+         if(obj){
+          CourSect.length=0;//清除原有选项
+         }
+         if(AttributeAry[obj]){
+          for(i=0;i<AttributeAry[obj].length;i++){
+           CourSect.options.add(new Option(AttributeAry[obj][i],i));
+          }
+         }else{
+           CourSect.options.add(new Option("暂未添加专业",""));
+         }
+        }
+    </script>
+
+    <script type="text/javascript" language="javascript">
+
+       function setSelVar(sel){
+          if(sel[sel.selectedIndex].value === "Read_Attribute") {
+          Cluster_label.style.display="block";
+          Attribute_label.style.display="block";
+          }
+          if(sel[sel.selectedIndex].value === "ReadReportingConfig") {
+          Cluster_label.style.display="block";
+          Attribute_label.style.display="block";
+          }
+       }
     </script>
 
     <label>
         <span>&nbsp;</span>
-        <!--<input type="button" class="button" value="Send" />-->
         <input type="submit" class="button" value="Send" />
     </label>
 </form>

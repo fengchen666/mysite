@@ -65,6 +65,7 @@ def form_process(request):
     # else:
     #     message = '你提交了空表单'
     # return HttpResponse(message)
+
     # The mapping between Clusters and the IDs
     # cluster_dic = {'Basic' : '0', 'Identify' : '3', 'Groups' : '4', 'Scenes' : '5', 'On/Off' : '6', 'Level Control' : '8'}
     cluster_dic = {'0': '0', '1': '3', '2': '4', '3': '5', '4': '6', '5': '8'}
@@ -109,10 +110,31 @@ def form_process(request):
     port = 22
     username = 'daintree'
     password = 'admin'
-    # command = 'ls -lrt'
-    # command = '/opt/daintree/bin/scripts/GetOnOffState.py -g 0022810130520000 -d 0022810210040013 -e 25'
-    # command = '/opt/daintree/bin/scripts/GetOnOffState.py -g ' + WAC + ' -d ' + Device_IEEE + ' -e 25'
-    command = '/opt/daintree/bin/scripts/ReadAttributes.py -g ' + WAC + ' -d ' + Device_IEEE + ' -e ' + Endpoint + ' -c ' + Cluster + ' -a ' + Attribute
+
+    #Parse the command inputed
+
+    if request.GET['Perform_Action'] == 'Read_Attribute':
+        command = '/opt/daintree/bin/scripts/ReadAttributes.py -g ' + WAC + ' -d ' + Device_IEEE + ' -e ' + Endpoint + ' -c ' + Cluster + ' -a ' + Attribute
+    elif request.GET['Perform_Action'] == 'ReadBindings':
+        command = '/opt/daintree/bin/scripts/ReadBindings.py -g ' + WAC + ' -d ' + Device_IEEE + ' -e ' + Endpoint
+    elif request.GET['Perform_Action'] == 'GetGroupMembership':
+        command = '/opt/daintree/bin/scripts/GetGroupMembership.py -g ' + WAC + ' -d ' + Device_IEEE + ' -e ' + Endpoint
+    elif request.GET['Perform_Action'] == 'Identify':
+        command = '/opt/daintree/bin/scripts/StartIdentify.py -g ' + WAC + ' -d ' + Device_IEEE + ' -e ' + Endpoint
+    elif request.GET['Perform_Action'] == 'GetCurrentLevel':
+        command = '/opt/daintree/bin/scripts/GetCurrentLevel.py -g ' + WAC + ' -d ' + Device_IEEE + ' -e ' + Endpoint
+    elif request.GET['Perform_Action'] == 'GetIdentifyTime':
+        command = '/opt/daintree/bin/scripts/GetIdentifyTime.py -g ' + WAC + ' -d ' + Device_IEEE + ' -e ' + Endpoint
+    elif request.GET['Perform_Action'] == 'GetOnOffState':
+        command = '/opt/daintree/bin/scripts/GetOnOffState.py -g ' + WAC + ' -d ' + Device_IEEE + ' -e ' + Endpoint
+    elif request.GET['Perform_Action'] == 'TurnOn':
+        command = '/opt/daintree/bin/scripts/TurnOn.py -g ' + WAC + ' -d ' + Device_IEEE + ' -e ' + Endpoint
+    elif request.GET['Perform_Action'] == 'TurnOff':
+        command = '/opt/daintree/bin/scripts/TurnOff.py -g ' + WAC + ' -d ' + Device_IEEE + ' -e ' + Endpoint
+    elif request.GET['Perform_Action'] == 'ReadReportingConfig':
+        command = '/opt/daintree/bin/scripts/ReadReportingConfig.py -g ' + WAC + ' -d ' + Device_IEEE + ' -e ' + Endpoint + ' -c ' + Cluster + ' -a ' + Attribute
+    elif request.GET['Perform_Action'] == 'ReadSimpleDescriptor':
+        command = '/opt/daintree/bin/scripts/ReadSimpleDescriptor.py -g ' + WAC + ' -d ' + Device_IEEE + ' -e ' + Endpoint
 
     # client = paramiko.Transport((hostname, port))
     # client.connect(username=username, password=password)
