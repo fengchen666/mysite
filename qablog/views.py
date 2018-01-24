@@ -99,6 +99,28 @@ def form_process(request):
                          '0': '0',  # 'CurrentLevel' : '0'
                      },
                      }
+    testman_cluster_dic = {'0': 'GenericClusters', '1': 'DimmingLightClusters'}
+    testman_suites_dic = {
+                         '0': {
+                             '0': 'All',
+                             '1': '00_profile_wide',
+                             '2': '01_basic',
+                             '3': '02_identify',
+                             '4': '03_commissioning',
+                             '5': '04_groups',
+                             '6': '11_zdocommands',
+                         },
+                         '1': {
+                             '0': 'All',
+                             '1': '05_on_off',
+                             '2': '06_level_control',
+                             '3': '07_move',
+                             '4': '08_ballast',
+                             '5': '09_bind_and_reporting',
+                             '6': '10_scenes',
+                         },
+                         }
+
     nbytes = 4096
     # hostname = '10.184.74.222'
     hostname = request.GET['SC_Address']
@@ -107,6 +129,8 @@ def form_process(request):
     Endpoint = request.GET['Device_Endpoint']
     Cluster = cluster_dic[request.GET['Device_Cluster']]
     Attribute = attribute_dic[request.GET['Device_Cluster']][request.GET['Device_Attribute']]
+    Testman_Cluster = testman_cluster_dic[request.GET['TM_Clusters']]
+    Testman_Suites = testman_suites_dic[request.GET['TM_Clusters']][request.GET['TM_Suites']]
     port = 22
     username = 'daintree'
     password = 'admin'
@@ -136,6 +160,13 @@ def form_process(request):
     elif request.GET['Perform_Action'] == 'ReadSimpleDescriptor':
         command = '/opt/daintree/bin/scripts/ReadSimpleDescriptor.py -g ' + WAC + ' -d ' + Device_IEEE + ' -e ' + Endpoint
 
+    # For testman
+    if request.GET['Perform_Action'] == 'Testman':
+        if Testman_Suites == 'All':
+            command = '/opt/daintree/bin/automation/testman.py -c system.py -r -t ' + Testman_Cluster + ' third_party'
+        else:
+            command = '/opt/daintree/bin/automation/testman.py -c system.py -r -t ' + Testman_Cluster + ' third_party' + '/' + Testman_Suites
+
     # client = paramiko.Transport((hostname, port))
     # client.connect(username=username, password=password)
     client = paramiko.SSHClient()
@@ -147,9 +178,7 @@ def form_process(request):
 
     outlines = stdout.readlines()
     resp = ''.join(outlines)
-
     html = "<html><body>stdout_data is %s.</body></html>" % resp
-
     # session.close()
     client.close()
     return render(request, 'ssh.html', {'Device_IEEE': Device_IEEE, 'Endpoint': Endpoint, 'Cluster': Cluster, 'Attribute': Attribute, 'ssh_output': resp})
